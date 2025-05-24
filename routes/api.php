@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Blog\BlogController;
 use App\Http\Controllers\BlogCategory\BlogCategoryController;
+use App\Http\Controllers\paket\PaketController;
 use App\Http\Controllers\Faq\FaqController;
 use App\Http\Controllers\GuestBook\GuestBookController;
 use App\Http\Controllers\Invitation\InvitationController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserController;
+
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::get('/paket',[PaketController::class,'show']);
 
 Route::prefix('v1')->group(function () {
 
@@ -68,6 +71,8 @@ Route::prefix('v1')->group(function () {
             Route::get('/{slug}', [BlogCategoryController::class, 'frontShow']);
         });
     });
+
+
 
     Route::prefix('tutorial')->group(function () {
 
@@ -186,7 +191,12 @@ Route::prefix('v1')->group(function () {
 
         //for admin
         Route::middleware(['isAdmin'])->group(function () {
+        
             Route::prefix('admin')->group(function () {
+
+                    Route::prefix('paket')->group(function() {
+                         Route::get('',[PaketController::class,'show']);
+                     });
 
                 Route::get("test", function () {
                     return "testting";
